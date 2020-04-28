@@ -1,5 +1,7 @@
 # Day 14
 
+[TOC]
+
 ## 학습목표 
 
 1. java.util의 컬렉션 객체를 이해할 수 있다. 
@@ -8,7 +10,7 @@
 
 
 
-## 문자열을 관리하는 클래스
+## 문자열을 관리하는 클래스[index, value, key]
 
 1) java.lang.String (static-불변 데이터)
 
@@ -65,13 +67,18 @@
 
 ## java.util의 컬렉션 객체 
 
+![img](https://tva1.sinaimg.cn/large/007S8ZIlgy1ge9eo9o6tzg30b6042aa5.gif)
+
 - Iterator, Enumeration :자료를 탐색하는 메소드를 가진 인터페이스 
+
 - Collection 
   - utill 팩키지의 root class 
   - CRUD 메소드가 선언된 인터페이스 
   - add() -> [Create/Read] , clear() -> [Delete], remove() -> [Delete], size(), toArray(), iterator() -> [Read]
+  
+  
 
-#### 데이터를 관리하는 방법(index, value, key)
+### 데이터를 관리하는 방법(index, value, key)
 
 1. index : **List** Interface
 
@@ -93,7 +100,34 @@
    - value는 중복데이터 O, NULL O
    - key(Set), value(List)
 
+
+
 ### index로 데이터를 관리하는 List 객체
 
+- ArrayList, Vector
+- C : boolean add(E e)
+- R : E get(int index), Iterator<E> iterator()
+- U : E set(int index, E element)
+- D : E remove(int index)
 
 
+
+### value로 데이터를 관리하는 Set 객체
+
+- HashSet
+- C: boolean add(E e)
+- R: Iterator<E> iterator()
+- U: boolean add(E e)
+- D: boolean remove(Object o)
+
+
+
+### Key로 데이터를 관리하는 Map 객체 
+
+- HashMap
+- C : V put(K key, V value)
+- R : V get(Object key), Set<K> keySet(), Collection<V> values()
+- U : Set<Map.Entry<K,V>> entrySet() 
+  - value를 바꾸기 위함 
+  - setValue(V value)
+- D : V remove(Object key)
