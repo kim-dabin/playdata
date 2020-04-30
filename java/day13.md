@@ -206,3 +206,47 @@ public class MTest02 {
 
 ### Custom Exception 
 
+```java
+public class MTest05 {
+	
+	public static void prn() throws MyException {
+		throw new MyException();
+	}
+	
+	public static void prn02() throws MyException  {
+		prn();
+	}
+	
+	public static void main(String[] args) {
+		
+		try {
+			prn02();
+		} catch (MyException e) { //Exception e = new MyException();
+			e.printStackTrace();
+		}
+	}
+}
+
+```
+
+
+
+```java
+public class MyException extends Exception {
+	
+	public MyException() {
+		super("MyException's message");
+	}
+	
+	public MyException(String msg) {
+		super(msg);
+	}
+	
+	@Override
+	public String toString() {
+		//printStackTrace();//stackoverflow 발생함 메서드 안에서 호출하면 안됨 // 재정의하거나 외부에서 사용 
+		return "숫자 2를 가졌다고!!<!!>!!";
+	}
+}
+```
+
