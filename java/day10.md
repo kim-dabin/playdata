@@ -1,5 +1,9 @@
 # Day10
 
+[TOC]
+
+
+
 ##  난수 발생
 
 ### java.lang.Math.random()
