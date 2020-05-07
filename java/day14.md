@@ -1,6 +1,6 @@
 # Day 14
 
-[TOC]
+
 
 ## 학습목표 
 
@@ -69,6 +69,10 @@
 
 ![img](https://tva1.sinaimg.cn/large/007S8ZIlgy1ge9eo9o6tzg30b6042aa5.gif)
 
+- 자료구조에 대한 클래스들을 자바의 컬렉션이라고 함 
+
+  - 자료구조: 자료를 조직적, 체계적으로 구분하여 표현하는 것 
+
 - Iterator, Enumeration :자료를 탐색하는 메소드를 가진 인터페이스 
 
 - Collection 
@@ -120,6 +124,44 @@
 - U: boolean add(E e)
 - D: boolean remove(Object o)
 
+```java
+//Set을 이용한 대량 연산 자료 관리  
+package com.chap11.sec02;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class SetTest02 {
+
+	public static void main(String[] args) {
+	 Set<String> m1=new HashSet<String>();
+	 Set<String>m2=new HashSet<String>();
+	 
+	 m1.add("A");
+	 m1.add("B");
+	 m1.add("C");
+	 
+	 m2.add("B");
+	 m2.add("D");
+	 m2.add("E");
+	 
+	 Set<String> m_union =new HashSet<String>(m1);
+	 m_union .addAll(m2);
+	 
+	 Set<String> m_intersection =	new HashSet<String>(m1);
+	 m_intersection.retainAll(m2);
+	 
+	 System.out.println("합집합 : " + m_union);
+	 
+	 System.out.println("교집합 : "+m_intersection);
+		
+		
+	}
+
+}
+
+```
+
 
 
 ### Key로 데이터를 관리하는 Map 객체 
@@ -131,3 +173,103 @@
   - value를 바꾸기 위함 
   - setValue(V value)
 - D : V remove(Object key)
+
+
+
+## 제네릭(Generic)
+
+- 자바에서 제공하는 객체들을 자료로 관리할 수 있는 하나의 형식
+
+
+
+## 기타
+
+### 국가 리스트를 한글로 변환
+
+```java
+package com.chap11.sec03;
+
+import java.util.Locale;
+public class LocaleTest02 {
+	public static void main(String[] args) {
+
+		Locale locale = null;
+		String[] countries = Locale.getISOCountries();
+       System.out.println(countries.length);
+	  
+		for (String country : countries) {
+			locale = new Locale("ko", country);
+			System.out.println(locale.getDisplayCountry());
+		}
+	}
+}
+
+```
+
+
+
+### 난수 발생을 이용한 프로그램
+
+- (Math.random() * (최대값-최소값)+1) + 최소값
+
+```java
+package com.chap11.sec03;
+
+public class RandomTest {
+
+	public static void main(String[] args) {
+
+		double x = Math.random();
+		System.out.println("실수형값  0.0 ~ 1.0: x = " + x);
+
+		int r1 = (int) (Math.random() * 10) ;
+		System.out.println("정수형  -0 ~ 9: r1 = " + r1);
+
+		int r2 = (int) (Math.random() * 6) + 3;
+		System.out.println("정수형  3 ~  8:  r2 = " + r2);
+
+	
+			int r3 = (int) (Math.random() * 21) - 10;
+			System.out.println("정수형  -10  ~  10: r3 = " + r3);
+		
+			
+			/*for(int i =0;i<=100;i++){			
+			int r4 = (int) (Math.random() * 6) + 10;
+			System.out.println("정수형  10~  15:  r4 = " + r4);
+			}*/
+
+	}
+
+}
+
+```
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geipaznlntj30ju056gm1.jpg" alt="image-20200506151255788" style="zoom:50%;" />  
+
+### NumberFormat 클래스를 이용하여 원화표시, % 등을 구현
+
+```java
+package com.chap11.sec03;
+
+import java.text.NumberFormat;
+
+public class NumberFormatTest {
+
+	public static void main(String[] args) {
+		 long ex01 = 1000000L ;
+         long ex02 = 2000000L ;
+         double ex03 = 0.50D;
+        NumberFormat nf1 = NumberFormat.getNumberInstance (); // (1) 범용 수치 포맷
+        NumberFormat nf2 = NumberFormat.getCurrencyInstance (); // (2) 통화 포맷
+        NumberFormat nf3 = NumberFormat.getPercentInstance (); // (3) 퍼센트 포맷
+
+        System.out.println (nf1.format (ex01)); // (4) 
+        System.out.println (nf2.format (ex02)); // (5) 
+        System.out.println (nf3.format (ex03) ); // (6)
+      
+
+	}
+}
+```
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geipbfwwz2j30ju0563yk.jpg" alt="image-20200506151324322" style="zoom: 50%;" /> 
