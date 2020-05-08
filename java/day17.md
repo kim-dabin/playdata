@@ -10,6 +10,8 @@
 
 ## java.io.* 을 사용한 입출력
 
+![image-20200507161119681](https://tva1.sinaimg.cn/large/007S8ZIlgy1gejwm0ya5sj30ou0man6i.jpg)
+
 ### Byte 단위 입출력(Stream) 
 
 - inputStream / OutputStream 두개의 추상 클래스가 있음 
@@ -65,3 +67,20 @@ public class ByteTest02 {
 - DataOutputStream(OutputStream), DataInputStream(InputStream) 
 
 ![image-20200507135352167](https://tva1.sinaimg.cn/large/007S8ZIlgy1gejsn29cthj30ul0rs4j6.jpg)
+
+
+
+### char 단위 입출력(2byte 기준)
+
+- Reader_InputStreamReader_FileReader _read() : char, char[]
+- Writer_OutputStreamWriter_FileWriter _writer() : char, char[], **String**
+  - Reader는 String X
+
+### Object 단위 입출력 
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gejx9cc47cj30ui0f2gop.jpg" alt="image-20200507163344363" style="zoom:50%;" />
+
+- .class를 입출력
+  - 기본 단위 : .class 
+- ObjectInputStream / ObjectOutputStream
+- 직렬화한 객체만 지원함(Only objects that support the java.io.Serializable interface can be written to streams.) 
