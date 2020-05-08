@@ -49,25 +49,29 @@ java.lang.
 
 ### user가 만든 코드를 스레드로 실행하는 방법
 
-- run() 메소드를 통해 Thread클래스로 실행시킨다.
+> run() 메소드를 통해 Thread클래스로 실행시킨다.
 
-#### 1) Runnable을 implements한 후 run() 메소드를 재정의 한다. 
+1. Runnable을 implements한 후 run() 메소드를 재정의 한다. 
 
-#### 2) Thread를 extends 한 후 run() 메소드를 재정의 한다 
+2. Thread를 extends 한 후 run() 메소드를 재정의 한다 
+   - [스레드에 대한 정보를 속성과 함께 메소드로 리턴]
+   - 주요 메소드 - start(), sleep(), join(), yield()
+   - public void start() : 자동으로 run() 메소드를 호출 
 
-- [스레드에 대한 정보를 속성과 함께 메소드로 리턴]
+3. (1),(2)의 방법으로 실행하고 싶은 코드를 run() 안에다 작성하고 Thread 클래스의 start()로 실행한다.  
+   - 코드 실행시 
+   - run() 메소드 단위 -> Thread로 인식 -> start()
+   - 학생 [공부, 잠, 영화] 이중 하나만 하는 것 = **단일 스레드** 
+   - **다중 스레드**
+     - 학생이 공부하면서 과자를 먹는다 = **다중 스레드**
+     - 기능 별로 만들어 놓은 메소드를 동시에 실행 
+     - 한사람이 문자를 주고 받는다. 
 
-- 주요 메소드 - start(), sleep(), join(), yield()
-  - public void start() : 자동으로 run() 메소드를 호출 
+### 예제
 
-#### 3) (1),(2)의 방법으로 실행하고 싶은 코드를 run() 안에다 작성하고 Thread 클래스의 start()로 실행한다.  
+![image-20200508142143592](https://tva1.sinaimg.cn/large/007S8ZIlgy1gekz2ar8p0j314y0qotjv.jpg)
 
-- 코드 실행시 
-  - run() 메소드 단위 -> Thread로 인식 -> start()
+![image-20200508141837625](https://tva1.sinaimg.cn/large/007S8ZIlgy1gekyz4ydz8j32240s47c8.jpg)
 
-- 학생 [공부, 잠, 영화] 이중 하나만 하는 것 = **단일 스레드** 
-- **다중 스레드**
-  - 학생이 공부하면서 과자를 먹는다 = **다중 스레드**
-  - 기능 별로 만들어 놓은 메소드를 동시에 실행 
-  - 한사람이 문자를 주고 받는다. 
+![image-20200508141935448](https://tva1.sinaimg.cn/large/007S8ZIlgy1gekz02cz7cj314c0u0q9l.jpg)
 
