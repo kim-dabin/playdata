@@ -17,6 +17,21 @@
 
 
 
+### join()
+
+- 나를 제외한 나머지를 우선 중지함
+- 예제 
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geo8m7nibkj30ua0qm0xq.jpg" alt="image-20200511100857116" style="zoom:33%;" /> 
+
+- 모든 메서드가 동시에 join()을 걸면 데드락(Dead Lock)상태에 빠짐 
+  - <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geo8npukr8j316m0u0thb.jpg" alt="image-20200511101023292" style="zoom:33%;" /> 
+
+- 시간으로 제어하면 각각 join() 실행 시작점을 조절할 수 있음
+  - <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geo8ojf285j315s0u0djj.jpg" alt="image-20200511100827040" style="zoom:33%;" /> 
+
+
+
 ### wait()
 
 - wait 메소드는 notify 또는 notifyAll 메소드가 호출 될 때까지 처리를 대기하는 메소드 
@@ -57,19 +72,6 @@
   ```
 
   
-
-### join()
-
-- 나를 제외한 나머지를 우선 중지함
-- 예제 
-
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geo8m7nibkj30ua0qm0xq.jpg" alt="image-20200511100857116" style="zoom:33%;" /> 
-
-- 모든 메서드가 동시에 join()을 걸면 데드락(Dead Lock)상태에 빠짐 
-  - <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geo8npukr8j316m0u0thb.jpg" alt="image-20200511101023292" style="zoom:33%;" /> 
-
-- 시간으로 제어하면 각각 join() 실행 시작점을 조절할 수 있음
-  - <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geo8ojf285j315s0u0djj.jpg" alt="image-20200511100827040" style="zoom:33%;" /> 
 
 ### 실습
 
@@ -375,3 +377,86 @@ Second Thread pop : K
 Second Thread pop : B
 ```
 
+
+
+- [Guarded Blocks 실습해보기](https://docs.oracle.com/javase/tutorial/essential/concurrency/guardmeth.html)
+
+### java.util.concurrent.locks.ReentrantLock
+
+- ReentrantLock 클래스에서는 lock 메소드에서 명시적으로 잠금을 획득한 후 unlock 메소드에서 해제
+
+
+
+### 블로킹 
+
+- Blocking = 두개 이상의 레코드 병합 
+- ex) 현재 시스템 또는 cpu가 있는 시스템 + 외부장치 = 데이터 주고 받음 = blocking 
+- jvm 연동시 실행하는 프로그램으로 외부장치로 부터 데이터를 주고 받는 스레드 
+- 키보드, 프린트, 모니터 이런게 다 blocking 
+
+
+
+## 네트워크 
+
+[apache 사이트](http://apache.org/)
+
+- apache : web server -> 정적페이지 
+
+- tomcat : WAS(Web Application Server) -> 동적 페이지 
+
+- 프로토콜 (http/https) 
+
+  ```tex
+  - http://ip주소/파일.html
+  - https://ip주소/파일.html
+  ```
+
+
+
+### web application _Server의 용어
+
+> /usr/local/Cellar/tomcat/9.0.34/libexec/conf
+
+- Server.xml
+
+  - WAS의 환경설정 
+
+- Context.xml 
+
+  ```
+  http://192.168.0.92/test
+  ```
+
+  - 여기서 test가 Context
+
+  - 하나의 웹 응용프로그램으로 url에 맵핑되는 이름
+  - 브라우저에 경로를 가지고 있는 폴더(프로젝트)
+  - 하나의 서버는 여러개의 Context를 가질 수 있음
+  - 웹 응용 프로그램의 환경 설정  
+
+- Web.xml
+
+  - 웹페이지 환경설정
+
+
+
+## 나중에 배울거
+
+### JAVA?
+
+- 어노테이션(스프링 들어가기 전)
+- 람다(스프링 들어가기 전)
+- nio&nio2
+- thread 병렬 (스프링 들어가기 전)
+
+### java.net  
+
+### db  
+
+### java+db = JDBC 
+
+### web
+
+### servlet&jsp
+
+### spring
