@@ -72,3 +72,34 @@
 2. java.io를 이용하여 탐색기 구현의 기본 클래스를 활용 할 수 있다.
 3. byte, char, object 타입을 사용하여 java.io의 클래스를 이용하여 입출력을 구현할 수 있다.
 
+
+
+#### [day16.md](https://github.com/kim-dabin/playdata/blob/master/java/day16.md)
+
+- java.io의 클래스들을 이해 할 수 있다.
+  - stream: byte 단위로 데이터를 처리하는 경로
+  - byte(InputStream, OutputStream), char(Reader, Writer), Object = 공통 메소드 read() write() close()
+
+
+
+#### [day17.md](https://github.com/kim-dabin/playdata/blob/master/java/day17.md)
+
+1. java.io.* 사용해서 입출력을 연동할 수 있다.
+2. byte, char, Object 타입을 입출력을 구분할 수 있다.
+3. Object 입출력을 통해 직렬화를 이해할 수 있다.
+
+
+
+#### [day18.md](https://github.com/kim-dabin/playdata/blob/master/java/day18.md)
+
+1. String exam
+2. 스레드 개념을 이해하고 활용할 수 있다.
+
+
+
+#### [day19.md](https://github.com/kim-dabin/playdata/blob/master/java/day19.md)
+
+1. 스레드의 주기를 살펴 보고 블록킹(blocking)에 대해서 이해할 수 있다.
+2. 네트워크의 구조를 서버와 클라이언트로 이해할 수 있다.
+3. java.net을 이용해서 서버 클라이언트 통신을 구현할 수 있다.
+
