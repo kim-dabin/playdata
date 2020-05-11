@@ -9,7 +9,7 @@
 
 ## 목차
 
-### java
+### [java](https://github.com/kim-dabin/playdata/tree/master/java)
 
 #### [day09.md](https://github.com/kim-dabin/playdata/blob/master/java/day09.md)
 
