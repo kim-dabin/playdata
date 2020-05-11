@@ -63,13 +63,13 @@
 - 나를 제외한 나머지를 우선 중지함
 - 예제 
 
-<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geo8m7nibkj30ua0qm0xq.jpg" alt="image-20200511100857116" style="zoom:50%;" /> 
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geo8m7nibkj30ua0qm0xq.jpg" alt="image-20200511100857116" style="zoom:33%;" /> 
 
 - 모든 메서드가 동시에 join()을 걸면 데드락(Dead Lock)상태에 빠짐 
-  - <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geo8npukr8j316m0u0thb.jpg" alt="image-20200511101023292" style="zoom:50%;" />
+  - <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geo8npukr8j316m0u0thb.jpg" alt="image-20200511101023292" style="zoom:33%;" /> 
 
 - 시간으로 제어하면 각각 join() 실행 시작점을 조절할 수 있음
-  - <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geo8ojf285j315s0u0djj.jpg" alt="image-20200511100827040" style="zoom:50%;" />
+  - <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1geo8ojf285j315s0u0djj.jpg" alt="image-20200511100827040" style="zoom:33%;" /> 
 
 ### 실습
 
