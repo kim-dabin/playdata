@@ -30,7 +30,7 @@ java.util.logging.ConsoleHandler
 
   - server.xml[서버]
   - context.xml[프로젝트 설정파일]
-  - web.xml[웹페이지 설정파일 ]
+  - web.xml[웹페이지 설정파일]
 
 - lib : jar 파일 -> java를 확장한 클래스들을 패키지로 만들어 참조 파일로 구성 
 
@@ -54,3 +54,78 @@ java.util.logging.ConsoleHandler
 - work : tomcat의 컨테이너가 있는 곳(자기 스스로 일하는 곳) 
 
   
+
+## Web Server 와 Web Application Server
+
+- web project를 생성할 때, 브라우저로 요청되는 페이지 
+
+  - 정적 페이지 - Web Server
+  - 동적 페이지 - WAS
+
+- Web Server의 종류
+
+  <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gepphwa7ymj30g207ojsa.jpg" alt="image-20200512163834130" style="zoom:33%;" /> 
+
+- WAS 종류 
+
+  - BEA - Web Logic, IBM - Web Sphere, T-max - Jeus, Apache - Tomcat
+
+
+
+## Java.net
+
+### URI/URL
+
+- java.net.URI
+
+  - Uniform Resource Identifier (URI,통합 자원 식별자)
+
+  - 인터넷에 있는 자원을 나타내는 유일한 주소
+
+  - ```tex
+    [scheme:][//authority][path][?query][#fragment]
+    ```
+
+  - https://127.0.01:8080/MyTest/login.jsp?id=big5&pwd=admin1234#a.java
+
+  - file://Library/Tomcat/webapps/MyTest/b.html
+
+- java.net.URL
+
+  - Uniform Resource Locator (URL)
+  - 브라우저에서 Http 프로토콜로만 접근(URI의 하위개념) 
+
+
+
+- 웹페이지 java.net.URL 클래스로 읽어오는 방법 openConnection()
+
+  - ```java
+    public static void main(String[] args) throws MalformedURLException, IOException {
+    		URLConnection urlc = new URL("http://localhost:8080/").openConnection();
+    		BufferedReader bffer = new BufferedReader(new  InputStreamReader(urlc.getInputStream(),"UTF-8"));
+    
+    		int byteRead;
+    
+    		while ((byteRead = bffer.read()) != -1) {
+    			System.out.print((char) byteRead);
+    		} // while end
+    
+    		bffer.close();
+    
+    	}// main() end
+    ```
+
+    
+
+### InetAddress
+
+- java.net.InetAddress
+- DNS서버가 가진 정보를 가진 클래스 
+- Inet4Address, Inet6Address
+
+#### 주요 메소드
+
+- public static InetAddress[] getAllByName(String host)
+- public static InetAddress getByAddress(byte[] addr)
+
+​                                  
