@@ -86,9 +86,13 @@ java.util.logging.ConsoleHandler
     [scheme:][//authority][path][?query][#fragment]
     ```
 
-  - https://127.0.01:8080/MyTest/login.jsp?id=big5&pwd=admin1234#a.java
+  - ```
+    https://127.0.01:8080/MyTest/login.jsp?id=big5&pwd=admin1234#a.java
+    ```
 
-  - file://Library/Tomcat/webapps/MyTest/b.html
+  - ```
+    file://Library/Tomcat/webapps/MyTest/b.html
+    ```
 
 - java.net.URL
 
