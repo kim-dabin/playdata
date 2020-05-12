@@ -103,3 +103,12 @@
 2. 네트워크의 구조를 서버와 클라이언트로 이해할 수 있다.
 3. java.net을 이용해서 서버 클라이언트 통신을 구현할 수 있다.
 
+
+
+#### [day20.md](https://github.com/kim-dabin/playdata/blob/master/java/day20.md)
+
+1. 서버와 클라이언트 구조를 이해할 수 있다.
+2. Web Server와 Web Application Server를 구별 할 수 있고 설명할 수 있다. 
+3. java.net의 클래스들을 이용하여 udp, tcp 구조를 설계할 수 있다. 
+4. 스트림을 이용하여 메세지 전달을 Server와 Client간에 주고 받을 수 있다. 
+
