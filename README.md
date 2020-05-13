@@ -112,3 +112,10 @@
 3. java.net의 클래스들을 이용하여 udp, tcp 구조를 설계할 수 있다. 
 4. 스트림을 이용하여 메세지 전달을 Server와 Client간에 주고 받을 수 있다. 
 
+
+
+#### [day21.md](https://github.com/kim-dabin/playdata/blob/master/java/day21.md)
+
+1. java의 환경 설정 값을 살펴보고 활용할 수 있다. 
+2. java.net의 클래스들을 이용하여 udp, tcp 구조를 설계할 수 있다. 
+3. java.io 스트림을 이용하여 메시지 전달을 Server와 Client간에 주고 받을 수 있다. 
