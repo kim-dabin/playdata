@@ -240,13 +240,19 @@ SELECT DISTINCT JOB FROM EMP; <-- 중복 데이터 제거
 ## GROUP BY
 
 ```mariadb
-SELECT 
-FROM
-WHERE 
-GROUP BY
-HAVING
-ORDER BY
+SELECT  ----- 5 
+FROM ----- 1 
+WHERE ----- 2 [조건]
+GROUP BY ----- 3
+HAVING ----- 4[조건]
+ORDER BY ----- 6
 ```
+
+> Having 절 
+>
+> - where 절은 집계 이전에 having절은 집계 이후에 필터링 작업을 수행
+> - having절을 사용하여 그룹을 제한
+> - having절은 GROUP BY 뒤에 사용하는 것을 권장
 
 
 
