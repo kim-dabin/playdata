@@ -4,6 +4,8 @@
 
 1. 서브 쿼리를 이용해서 여러개의 엔티티를 사용하여 값의 결과를 단일행, 다중행, 다중 컬럼 형식으로 추출할 수 있다. 
 
+    
+
 
 
 ```tex
@@ -441,3 +443,28 @@ from emp_res;
 ```
 
 <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gf12hhtzovj30gk0h0wiy.jpg" alt="image-20200522122910312" style="zoom:50%;" /> 
+
+
+
+## oracle & java
+
+1. java에서 file(txt, xml, csv, sql,,)에서 csv를 직접 생성하고 읽을 수 있음
+2. oracle에서 데이터를 csv를 내보낸 것을 java에서 불러올 수 있음
+3. csv를 .sql로 변환한 다음 oracle 서버에 테이블로 올리고 싶음
+4. java로 오라클을 접속해서 데이터를 SELECT할 수 있음
+
+
+
+### JDBC의 주요 패키지 java.sql.*
+
+- 주요 인터페이스와 주요 클래스 
+  1. java.lang.Class -> Class.forName("참조자료형"); 
+     - 드라이버 클래스를 참조함 
+  2. java.sql.DriverManager.getConnection(url, username, password);
+     - 참조된 드라이버 클래스를 이용하여 지정된 값으로 접속
+  3. java.sql.Connection
+     - 연결된 객체를 통해 dml,ddl을 생성하고 commit, rollback, close명령을 가짐
+     - createStatement(), createPreparedStatement()등의 주요 메소드로 명령의 객체를 주어진 sql로 실행 후 결과를 sql구문에 따라 리턴하도록 구현
+  4. Statement -> exec000()메소드로 sql를 실행함
+  5. ResultSet -> sql실행 결과를 가진 테이블 객체 메모리로 내용을 호출함 
+
