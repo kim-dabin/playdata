@@ -117,7 +117,7 @@ SELECT empno, ename, deptno, sal,
 		RANK() OVER(PARTITION BY deptno ORDER BY sal DESC) "RANK" FROM EMP;
 ```
 
-
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfb8r46q5jj30x20riqc0.jpg" alt="image-20200531074135928" style="zoom:50%;" /> 
 
 Q2. 사원번호, 이름, 부서번호, 급여, 부서 내에서 급여가 많은 사원부터 순위를 매기자(DENSE_RANK함수이용)
 
@@ -126,22 +126,22 @@ SELECT empno, ename, deptno, sal,
 		DENSE_RANK() OVER(PARTITION BY deptno ORDER BY sal DESC) "RK" FROM EMP;
 ```
 
-
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfb8rh1v3oj30x20ri7db.jpg" alt="image-20200531074159838" style="zoom:50%;" /> 
 
 Q3. 부서번호가 30번인 사원번호, 이름, 부서번호, 급여, 부서 내에서 급여가 많은 사원부터 순위를 매기자.(RANK 함수 이용)
 
 ```sql
 SELECT empno, ename, deptno, sal,
 		RANK() OVER(PARTITION BY deptno ORDER BY sal DESC) "RK" 
-		FROM EMP WHERE empno = 30;
+		FROM EMP WHERE deptno = 30;
 		
 		
 SELECT empno, ename, deptno, sal,
 		RANK() OVER(ORDER BY sal DESC) "RK" 
-		FROM EMP WHERE empno = 30;		
+		FROM EMP WHERE deptno = 30;		
 ```
 
-
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfb8sygabvj30x00u0n6v.jpg" alt="image-20200531074324681" style="zoom:50%;" /> 
 
 Q4. 20번 부서원의 이름, 연봉,누적분산 정보를 조회해 본다.
 
@@ -150,7 +150,9 @@ SELECT ename, sal, CUME_DIST() over(ORDER BY sal)
 FROM EMP WHERE deptno=20;
 ```
 
-CUME_DIST()_누적 분산 정보 : PARTITION BY절로 나누어진 그룹별로 각 ROW를 ORDER BY 순서대로 정렬를 한 후 그룹별로 상대적 위치(누적 정보)를 구한다. 상대적인 위치는 구하고자 하는 값보다 작거나 같은 값을 가진 ROW수를 그룹 내 전체 ROW수로 나누 것을 의미하며 결과값은 범위는 0보다 크로 1보다 작거나 같다.
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfb8tgegslj30u206yacc.jpg" alt="image-20200531074353724" style="zoom:50%;" /> 
+
+> CUME_DIST()_누적 분산 정보 : PARTITION BY절로 나누어진 그룹별로 각 ROW를 ORDER BY 순서대로 정렬를 한 후 그룹별로 상대적 위치(누적 정보)를 구한다. 상대적인 위치는 구하고자 하는 값보다 작거나 같은 값을 가진 ROW수를 그룹 내 전체 ROW수로 나누 것을 의미하며 결과값은 범위는 0보다 크로 1보다 작거나 같다.
 
 
 
@@ -160,6 +162,8 @@ Q5. 사원을 월급 기준으로 4등급으로 분류하자.
 SELECT ENAME, SAL, NTILE(4) OVER(ORDER BY SAL)
 FROM EMP;
 ```
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfb8tx83jtj30u20r6wm1.jpg" alt="image-20200531074420810" style="zoom:50%;" /> 
 
 NTILE() : PARTITON BY 대신 BUCKET 이라는 단어로 ()안에 매개 개수로 나눈다.
 
@@ -181,7 +185,7 @@ ROW_NUMBER() OVER(ORDER BY SAL DESC, HIREDATE ASC) AS "순번"
 FROM EMP;
 ```
 
-
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfb8v5796pj30y80r6dqn.jpg" alt="image-20200531074530590" style="zoom:50%;" /> 
 
 ###### WINDOWING 구문을 활용하자.
 
@@ -210,15 +214,23 @@ SELECT ENAME, JOB, SAL, AVG(SAL) OVER (PARTITION BY JOB) "JOB_SAL_AVG", MAX(SAL)
 FROM EMP;
 ```
 
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfb8vx339cj311q0r6qfj.jpg" alt="image-20200531074615635" style="zoom:50%;" /> 
+
+
+
 Q9. 사원의 월급을 전체 월급을 50000으로 증가 했을 때 기존 월급 비율로 적용했을 경우 각 사원은 얼마를 받게 되는 지 조회해 보자.
 
 ```SQL
 SELECT ENAME, SAL,
-ratio_to_report(sal) over() as "비율",
-TRUNC(ratio_to_report(sal) over()*50000) as "인상급여" FROM EMP;
+ratio_to_report(sal) over() as "ratio",
+TRUNC(ratio_to_report(sal) over()*50000) as "raise sal" FROM EMP;
 ```
 
-ratio_to_report() :해당 구간에서 차지하는 비율을 리턴하는 함수
+<img src="../../../Library/Application Support/typora-user-images/image-20200531074828148.png" alt="image-20200531074828148" style="zoom:50%;" /> 
+
+> ratio_to_report() :해당 구간에서 차지하는 비율을 리턴하는 함수
+
+
 
 Q10.
 
@@ -226,6 +238,8 @@ Q10.
 SELECT ENAME, DEPTNO, SAL, LAG(SAL,1,10) OVER (ORDER BY SAL) AS NEXT_SAL
 FROM EMP;
 ```
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfb8yu561wj30rm0r646w.jpg" alt="image-20200531074903848" style="zoom:50%;" /> 
 
 - Lag/Lead 함수는 특정 로우가 속한 파티션 내에서 상대적 상하 위치에 있는 특정 로우의 컬럼 값을 참조하거나 상호 비교하고자 할 때 사용할 수 있는 함수이다.
 
@@ -239,10 +253,14 @@ Q11.사원의 이름, 부서번호, 봉급과 사원의 이전 사원의 봉급�
 
 ``` SQL
 SELECT ENAME, DEPTNO, SAL, LAG(SAL,1,0) OVER (ORDER BY SAL) AS NEXT_SAL02,
-						   LAG(SAL,1,SAL) OVER (ORDER BY SAL) AS NEXT_SAL03
+						   LAG(SAL,1,SAL) OVER (ORDER BY SAL) AS NEXT_SAL03,
 						   LAG(SAL,1,SAL) OVER (PARTITION BY DEPTNO ORDER BY SAL)                              AS NEXT_SAL04
 FROM EMP;					
 ```
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfb90049a9j312e0r6k3c.jpg" alt="image-20200531075011395" style="zoom:50%;" /> 
+
+
 
 Q12. 사원의 이름, 부서번호, 봉급과 사원의 다음 사원의 봉급을 조회해보자.
 
@@ -253,6 +271,10 @@ SELECT ENAME, DEPTNO, SAL,
 ```
 
 ------
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gfb8x0owd8j30wo0r67e7.jpg" alt="image-20200531074718910" style="zoom:50%;" /> 
+
+
 
 ### DML
 
@@ -424,7 +446,7 @@ WHERE JOB=(SELECT JOB
 
 
 
-```
+```sql
 INSERT INTO TESTEMP
 SELECT * FROM EMP
 WHERE JOB='SALESMAN';
