@@ -29,9 +29,11 @@
 - jsp를 확장해서 만든 태그 라이브러리 
      - taglibs-standard-spec-1.2.5.jar
      - taglibs-standard-impl-1.2.5.jar
+     
 - jsp와 el태그로 만든 확장 라이브러리
 
      - taglibs-standard-jstlel-1.2.5.jar
+     
 - xml 태그를 xpath로 만들어 연동하는 라이브러리 
 
      - xalan-2.7.1.jar
@@ -40,3 +42,12 @@
   jostle-1_0-fr-javadoc.zip
 
   https://docs.oracle.com/javaee/5/jstl/1.1/docs/tlddocs
+
+
+
+## JSTL
+
+- RSS(Really Simple Syndication, Rich Site Summary)
+  - 블로그처럼 컨텐츠 업데이트가 자주 일어나는 웹사이트에서, 업데이트된 정보를 쉽게 구독자들에게 제공하기 위해 XML을 기초로 만들어진 데이터 형식
+  - RSS서비스를 이용하면 업데이트된 정보를 찾기 위해 홈페이지에 일일이 방문하지 않아도 업데이트 될 때마다 빠르고 편리하게 확인 할 수 있음
+
