@@ -38,6 +38,8 @@
 
 ## servlet
 
+- servlet?
+  - https://docs.oracle.com/javaee/7/tutorial/servlets001.htm#BNAFE
 - ServletContext
   - jsp에서는 application 내장 객체로 사용함 
 - Interface ServletRequest
@@ -47,7 +49,6 @@
 - Interface HttpServletRequest
   - 브라우저를 요청했을 때 갖고 있는 데이터를 받아옴 
   - 
-
 - redirect 와 forward 차이 
   - redirect:  페이지간의 주소 이동 방식, 새로운 페이지에서는 request와 response 객체가 새롭게 생성
   - forward: 페이지 이동만하고 주소가 바뀌지는 않는다. 그래서 웹브라우저는 다른 페이지로 이동한 것을 모른다. 그래서 최초에 호출한 URL만 표시되고 이동 페이지의 URL 정보를 볼 수없다. 동일한 웹 컨테이너에 있는 페이지로만 이동 가능하다. 
