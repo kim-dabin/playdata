@@ -156,7 +156,7 @@ class UserDaoJDBCImpl{
 
 - sample1 
 
-  - rorcprDI 개념을 이해함
+  - DI 개념을 이해함
   - is ~ a 관계를 이용한 구도를 학습
 
 - sample2
@@ -170,6 +170,22 @@ class UserDaoJDBCImpl{
 - sample4 
 
   - 추상클래스의 패턴과 싱글톤 패턴을 이해하고 구현
+
+- sample5
+
+  - setter injection으로 의존성 주입
+
+- sample6
+
+  - 다형성을 이용하여 생성자로 is~a(상속) 관계의 객체 값을 이용하여 의존성 주입
+
+- sample7
+
+  - xml 설정파일을 import하고 나열하고 호출한 결과를 확인
+
+- sample8, sample9
+
+  - 상속관계가 아닌 단일 클래스값을 이용하여 의존성 주입
 
 - 싱글톤 패턴(Singleton Pattern)
 
