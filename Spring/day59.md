@@ -158,46 +158,255 @@ class UserDaoJDBCImpl{
 
   - DI 개념을 이해함
   - is ~ a 관계를 이용한 구도를 학습
-
 - sample2
 
   - has ~ a 관계를 이용해 DI를 이용할 수 있음
-
 - sample3
 
   - setter, constructor injection의 이해도를 구현
-
 - sample4 
 
   - 추상클래스의 패턴과 싱글톤 패턴을 이해하고 구현
-
 - sample5
 
   - setter injection으로 의존성 주입
-
 - sample6
 
   - 다형성을 이용하여 생성자로 is~a(상속) 관계의 객체 값을 이용하여 의존성 주입
-
 - sample7
 
   - xml 설정파일을 import하고 나열하고 호출한 결과를 확인
-
 - sample8, sample9
 
   - 상속관계가 아닌 단일 클래스값을 이용하여 의존성 주입
+- sample10 
+  - 다형성 객체를 선언하고 자바코드로 빈팩토리를 생성해서 각각의 동적 바인딩을 구현
+- sample11
+  - lazy-init 사용, depends-on = "참조되는 객체의 id"(sample2/applicationContext2.xml)
+  - 빈팩토리를 이용해서 스프링에서 설정을 하고 난 후 객체를 id로 getBean()으로 호출을 하게 되면 메모리에 올려진 객체들이 선언된 순서대로 생성된 것을 확인 가능
+  - 기본적으로 스프링 컨테이너가 시작할 때 싱글톤에 의해 bean에 대해 모든 인스턴스화 한다
+  - 만약 특정 싱글톤유형에 대한 bean을 컨테이너가 시작할 때 인스턴스화 시키지 않고 해당 bean을 사용하고자 하는 시점에 인스턴스화 하고 싶을 때 사용하는 속성 키워드가 **lazy-init="true"**
+  - depends-on
+    - bean이 초기화 되기 전에 먼저 초기화 되는 키워드 
+    - 특정 bean이 초기화 되기 전에 초기화 되어야 하는 bean을 명시적으로 선언 
+    - 생성자와 setter 메소드로 값을 전달하기 이전에 메모리에 생성되는 객체가 정의 되어 메모리 체크를 할 때 많이 사용되는 키워드 
+    - 미리 서버를 구동 시켜놓고 특정 리소스에 대한 작업을 체크할 때 사용됨 
+    - [NoSuchBeanDefinitionException] : No bean named 'myaddr03' available
+  - getBean -> lazy-init
+  - 참조되는 객체를 호출하기 전에 메모리에 올림 -> depends-on
+- sample12
+  - java.util의 컬렉션[list, set, map...] 값을 inject할 수 있음 
+  - [7.4.2](https://docs.spring.io/spring/docs/4.3.27.RELEASE/spring-framework-reference/htmlsingle/#beans-factory-properties-detailed)
+- sample13
+  - abstract = "true" 일반 클래스를 추상 클래스로 선언하는 기능
+  - merge = "true" collections 병합하는 키워드 
+- sample14
+  - message -> MessageSource를 이용해서 속성값을 찾아옴 
+  - 번들값, 속성값등을 참조할 때 사용
+  - [*MessageSource*](https://docs.spring.io/spring/docs/4.3.27.RELEASE/javadoc-api/org/springframework/context/MessageSource.html) : getMessage()
+  - [*MessageSourceAware*](https://docs.spring.io/spring/docs/4.3.27.RELEASE/javadoc-api/org/springframework/context/MessageSourceAware.html) : setMessageSource(MessageSource messageSource)
+  - 키, 값을 가진 파일 생성 -> ResourceBundleMessageSource 로 파일을 읽어온다 -> MessageSourceAware를 상속받은 클래스는 setMessageSource()로 메세지를 관리한다 -> MessageSource의 getMessage()로 키를 지정해서 값을 리턴받는다
+- sample15 : autowire 속성
+  - byName 
+    - id -> favoriteFood setFavoriteFood 자동 호출 
+    - 참조변수의 이름과 같은 해당객체의 메서드가 있을 때, 자동 할당
+  - byType 
+    - 참조 변수의 Type과 같은 메서드의 param이 선언되어 있으면 자동할당
+    - setFavoriteFood(Food f)
+  - contructor
+    - byType과 같은 내용을 생성자를 통해서 같은 type이 있으면 할당
+  - autodetect
+    - 생성자에 할당할 type이 있는지를 먼저 확인한 후, 없으면 메서드에서 type이 있는 지를 확인하여 할당 
+    - 실제 class에서 @autowired라는 옵션으로 많이 쓰이고 있는 내용 
+- sample16 : **SPRING **(spring 2.5 / spring 3.0 [표준] / spring 4.0) + **DB** 
+  - spring + jdbc [java] java.sql
+  - spring + jdbc [datasource] javax.sql
+  - spring ver 4.0
+    - springJDBC : org.springframework.jdbc.datasource.SimpleDriverDataSource
+  - spring + ORM(Object-Relational Mapping) [Hibernate, ibatis(ver2.0, ver3.0), mybatis(ver 5.0)]
+    - .xml로 쿼리를 작성한 파일을 객체로 맵핑 
+  - spring ver 5.0 + JSR
+- sample17 
+  - spring + jdbc [datasource] javax.sql을 기준으로 db를 세팅하는데 환경설정파일 [beans]을 .java로 연동하는 방법 
 
-- 싱글톤 패턴(Singleton Pattern)
 
-  - static 메소드와 private 생성자를 만들어서 단하나의 인스턴스만 연동할 수 있도록 구현하는 패턴 
 
-  - 자바에서 카렌다 클래스, 그래픽 클래스등이 이에 속함 
+> 싱글톤 패턴(Singleton Pattern)
+>
 
-    ```java
-    class Test{
-      private Test(){}
-      public static Test getInc(){return new Test();}
-    } => Test t1 = Test.getInc(); -> 싱글톤 
-    ```
+- static 메소드와 private 생성자를 만들어서 단하나의 인스턴스만 연동할 수 있도록 구현하는 패턴 
 
-    
+- 자바에서 카렌다 클래스, 그래픽 클래스등이 이에 속함 
+
+  ```java
+  class Test{
+    private Test(){}
+    public static Test getInc(){return new Test();}
+  } => Test t1 = Test.getInc(); -> 싱글톤 
+  ```
+
+  
+
+### sample12 예제
+
+> FooTestApp.java
+
+```java
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class FooTestApp {
+	public static void main(String[] args) {
+		ApplicationContext factory = new ClassPathXmlApplicationContext("sample12/applicationContext.xml");
+		Foo foo = factory.getBean("foo", Foo.class);
+		System.out.println("******* start ********");
+		foo.fooMethod();
+	}
+}
+
+```
+
+> 실행결과
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggqaza7prcj31660u0n82.jpg" alt="image-20200714114227817" style="zoom:50%;" /> 
+
+- applicationContext.xml에서 생성한 객체가 메인에서 호출되지 않았음에도 객체가 생성되어 메모리에 올라감
+
+
+
+
+
+> Foo.java
+
+```java
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+public class Foo {
+	private Bar bar;
+	
+	public Foo() {
+	}
+	
+	public Foo(Date date) {
+		System.out.println("[ 생성자 "+date+" ]");
+	}
+	
+	public void setBar(Bar bar) {
+		this.bar = bar;
+		System.out.println("[ setBar 호출 ]");
+	}
+
+	public void setDate(Date date) {
+		System.out.println("[ setDate() 메서드 호출 "+date+" ]");
+	}
+
+	public void setNumber(int number) {
+		System.out.println("[ setNumber() 메서드 호출 "+number+" ]");
+	}
+
+	public void setInfo(List<String> info) {
+		System.out.println("[ setInfo() 메서드 호출 ]");
+		for(String i : info) {
+			System.out.println(i);
+		}
+	}
+
+	public void setStudents(String[] students) {
+		System.out.println("[ setStudents() 메서드 호출 ]");
+		for(String s : students) {
+			System.out.println("[ 학생 : "+s+" ]");
+		}
+	}
+
+	public void setEvent(Set<String> event) {
+		System.out.println("[ setEvent() 메서드 호출 ]");
+		for(String e : event) {
+			System.out.println("[ 이벤트 응모 : "+e+" ]");
+		}
+	}
+
+	public void setTelNumber(Map<String, String> telNumber) {
+		System.out.println("[ setTelNumber() 메서드 호출 ]");
+		for(String tel : telNumber.keySet()) {
+			System.out.println("[ "+tel+" 의 전화번호 : "+telNumber.get(tel)+" ]");
+		}
+	}
+
+	public void fooMethod() {
+		System.out.println("[ Foo 클래스의 fooMethod() 메서드... ]");
+		bar.pr();
+	}
+}
+
+```
+
+> Bar.java
+
+```java
+public class Bar {
+	public Bar() {
+		System.out.println("[ Bar 객체생성 ]");
+	}
+	public void pr() {
+		System.out.println("[ Bar 클래스의 pr() 메서드... ]");
+	}
+}
+
+```
+
+> applicationContext.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	<bean class="sample12.Bar" id="bar"/>
+	<bean class="java.util.Date" id="date"/>
+	<bean class="sample12.Foo" id="foo" p:bar-ref="bar" c:date-ref="date"
+	p:number="25">
+	<property name="info">
+		<list>
+			<value>영어</value>
+			<value>수학</value>
+			<value>국어</value>
+		</list>
+	</property>
+	<property name="students">
+		<list>
+			<value>강민</value>
+			<value>다훈</value>
+			<value>다빈</value>
+		</list>
+	</property>
+	<property name="event">
+		<set>
+			<value>둘리</value>
+			<value>고길동</value>
+			<value>또치</value>
+			<value>고길동</value>
+		</set>
+	</property>
+	<!-- setTelNumber(Map<String,String>) -->
+	<property name="telNumber">
+		<map>
+			<entry key="1" value="현이"/>
+			<entry key="2" value="종철이"/>
+			<entry key="3" value="수영이"/>
+			<entry key="4" value="정연이"/>
+		</map>
+	
+	</property>
+	</bean>
+	
+</beans>
+
+```
+
