@@ -36,93 +36,107 @@
 >
 > 각각의 역할에 맞게 매핑해줌 (핵심코드 알려줌)
 
-- [Aop 의 주요 구성 요소 [sec.11]](https://docs.spring.io/spring/docs/4.3.27.RELEASE/spring-framework-reference/htmlsingle/#aop-introduction-defn)
+#### [Aop 의 주요 구성 요소 [sec.11]](https://docs.spring.io/spring/docs/4.3.27.RELEASE/spring-framework-reference/htmlsingle/#aop-introduction-defn)
 
-  - joinpoint : 프로그램 의 제어흐름 중 한 시점을 의미한다.
+- joinpoint : 프로그램 의 제어흐름 중 한 시점을 의미한다.
 
-    - (메소드 호출 시점, 메소드 호출 결과가 리턴되는 시점, 예외 던져지는 시점)
-    - 각각의 joinpoint 들은 전후로 Crosscutting Concerns 의 기능이 AOP 에 의해 자동으로 추가되어 동작되는 후보 지점이다.
+  - (메소드 호출 시점, 메소드 호출 결과가 리턴되는 시점, 예외 던져지는 시점)
+  - 각각의 joinpoint 들은 전후로 Crosscutting Concerns 의 기능이 AOP 에 의해 자동으로 추가되어 동작되는 후보 지점이다.
 
-  - pointcut : AOP 를 선별하는것
+- pointcut : AOP 를 선별하는것
 
-    - value = "execution(public * * (..)) " -> pointcut 을 정의한것
-    - AOP 의 전체 코드에서 실행되어지는 메소드 유형을 정의한다
+  - value = "execution(public * * (..)) " -> pointcut 을 정의한것
+  - AOP 의 전체 코드에서 실행되어지는 메소드 유형을 정의한다
+  - 기본 표현식 
 
-  - 기본 표현식 -	set* (..) : 메소드 명이 set 으로 시작하고 0개 이상의 매개인자를 가진 메소드
-    			*main(..) : 메소드 명이 main 이고
-    			return type 이 any type(모든타입) 이고 0개 이상의 매개인자를 가진 메소드
-    		
-    타입 매핑 형식 - java.io.*;
-    	org.com.test..* 
-    				 org.com.test 내의 서브 패키지에 속한 모든 하위요소
-    	Number +
-    			 	Number 또는 Number 서브타입의 모든 타입
-    			 	
+  ```java
+  - set* (..) 
+    : 메소드 명이 set으로 시작하고 0개 이상의 매개인자를 가진 메소드
+  - *main (..)
+    : 메소드 명이 main이고 return type이 any type(모든타입)이고 0개 이상의 매개인자를 가진 메소드
+  ```
 
-    	!(Number + ) 
-    				Number 또는 Number 서브타입의 모든 타입이 아닌것
-    	int || Integer 
-    				int 또는 Integer 형
-    	
-    	org.com.test .. * && !Serializable +
-    			-> org.com.tes 패키지 또는 하위 서브 패키지 내에 존재하면서
-    				Serializable 의 타입이 아닌 모든 요소
-    	
-    	접근 지정에 따른 형식
-    			-public static void main(..)
-    			-!private * *  (..) 
-    				리턴타입이 모든 타입이고, 0개이상의 매개인자를 가진 메소드중 접근제한자가 private 가 아닌 메소드
-    			-* main(..) 
-    				접근 지정자 명시하지 않으면 public 접근 제한자
-    			-* main(*, ..) 
-    				리턴 타입이 모든 타입이고 최소 1개의 모든 타입을 가진 메소드
-    			-* main(*, .. , String , *)
-    				리턴타입이 모든 타입이고 최소 3개이상의 매개인자를 가지며
-    				끝에서 두번째는 반드시 String 타입이여야 한다.
-    	생성자 형식
-    			new ( .. ) 
-    					0개 이상의 모든 타입을 가진 생성자
-    			Account.new ( .. ) 
-    					0개 이상의 모든 타입을 가진 Acocunt 클래스의 생성자 
-    					
-    			execution 또는 call 
-    					특정 메소드나 생성자 실행시점을 정의한다.
-    			
-    			execution( * main(..) )
-    			call (* main(..))
-    			get (Collection+) - 멤버변수에 선언
-    			set (Collection+) - 멤버변수에 선언
-    			
-    	Exception 처리 
-    		handler(RuntimeException + )
-    			RuntimeException 하위에 있는 Exception 을 모두 catch 하는 시점
-    	
-    	whitin 처리
-    		특정 유형의 joinpoint 를 정의하는 시점
-    	whitincode 
-    		특정 메소드 또는 생성자 내에 정의된 코드를 정의하는 시점
-    	this 
-    		해당 joinPoint 를 정의하는 시점
-    	target
-    		대상 객체의 타입을 정의하는 시점
-    		ex) call(* * (..)) && target(MyTest)
-    		MyTest 라는 클래스 내의 모든 메소드를 호출
+  - 타입 매핑 형식 
 
-    3. advice (@after, @before~~)
-    		각 joinoint에 삽입 되어 동작할 수 있는 코드
-    	
-    4. Weaving (내부적으로 일어남)
-    		Core concerns 랑 Crosscuttion Concerns 를 엮어서 
-    		동작하도록 수행한다는 의미 
-    		target 객체에 aspect 를 적용해서 새로운 프록시 개체를 생성하는 절차
-    5. aspect 
-    		다수의 클래스에서 공통적으로 구현하는 것으로 모듈화를 말한다 
-    		어디서 (pointcut) 무엇을 할지 (Advice) 를 합쳐놓은것
-    		aspect = pointcut + advice
-    	*advice 는 각 joinpoint 에 삽입되어서 동작할 수 있는 코드
-    	
-    6. 프록시 
-    	어드바이스를 target 객체에 적용하면 생성되는 객체				
+  ```java
+  - java.io.*;
+  - org.com.test..* 
+  	: org.com.test 내의 서브 패키지에 속한 모든 하위요소
+  - Number + 
+  	: Number 또는 Number 서브타입의 모든 타입
+  - !(Number + ) 
+  	: Number 또는 Number 서브타입의 모든 타입이 아닌것
+  - int || Integer 
+  	: int 또는 Integer 형
+  - org.com.test .. * && !Serializable +
+  	: org.com.tes 패키지 또는 하위 서브 패키지 내에 존재하면서 Serializable 의 타입이 아닌 모든 요소		
+  ```
+
+  - 접근 지정에 따른 형식
+
+  ```java
+  - public static void main(..)
+  - !private * *  (..) 
+  	: 리턴타입이 모든 타입이고, 0개이상의 매개인자를 가진 메소드중 접근제한자가 private 가 아닌 메소드
+  - * main(..) 
+  	: 접근 지정자 명시하지 않으면 public 접근 제한자
+  - * main(*, ..) 
+  	: 리턴 타입이 모든 타입이고 최소 1개의 모든 타입을 가진 메소드
+  - * main(*, .. , String , *)
+  	: 리턴타입이 모든 타입이고 최소 3개이상의 매개인자를 가지며 끝에서 두번째는 반드시 String 타입이여야 한다.
+  ```
+
+  - 
+    생성자 형식
+
+  ```java
+  - new ( .. ) 
+    : 0개 이상의 모든 타입을 가진 생성자
+  - Account.new ( .. ) 
+  	: 0개 이상의 모든 타입을 가진 Acocunt 클래스의 생성자 
+  - execution 또는 call 
+  	: 특정 메소드나 생성자 실행시점을 정의한다.
+  - execution( * main(..) )
+  - call (* main(..))
+  - get (Collection+) 
+    : 멤버변수에 선언
+  - set (Collection+) 
+    : 멤버변수에 선언
+  ```
+
+  - Exception 처리
+
+  ```java
+  - handler(RuntimeException + )
+    : RuntimeException 하위에 있는 Exception 을 모두 catch 하는 시점
+  ```
+
+  - whitin 처리 : 특정 유형의 joinpoint 를 정의하는 시점
+  - whitincode : 특정 메소드 또는 생성자 내에 정의된 코드를 정의하는 시점
+  - this : 해당 joinPoint 를 정의하는 시점
+  - target
+    - 대상 객체의 타입을 정의하는 시점
+    - ex) call(* * (..)) && target(MyTest)
+    - MyTest 라는 클래스 내의 모든 메소드를 호출
+
+- advice (@after, @before~~)
+
+  - 각 joinoint에 삽입 되어 동작할 수 있는 코드
+
+- Weaving (내부적으로 일어남)
+
+  - Core concerns 랑 Crosscuttion Concerns 를 엮어서 동작하도록 수행한다는 의미 
+  - target 객체에 aspect 를 적용해서 새로운 프록시 개체를 생성하는 절차
+
+- aspect 
+
+  - 다수의 클래스에서 공통적으로 구현하는 것으로 모듈화를 말한다 
+  - 어디서 (pointcut) 무엇을 할지 (Advice) 를 합쳐놓은것
+  - aspect = pointcut + advice
+  - *advice 는 각 joinpoint 에 삽입되어서 동작할 수 있는 코드
+
+- 프록시(proxy)
+  - 어드바이스를 target 객체에 적용하면 생성되는 객체				
 
 ### sample03 
 
@@ -300,18 +314,25 @@ public class Mtest {
     > - 클라이언트의 권한 : Read-Only
 
 - ThrowsAdvice : 예외가 발생했을 때 
+
   - try{...}catch{} 를 따로 구현하지 않고 
   - org.springframework.aop.ThrowsAdvice 구현체에서 처리함 
+
 - org.springframework.aop.framework.ProxyFactoryBean[AOP의 bean자체를 말함]
+
   - proxyInterfaces : 문자열 인터페이스 이름의 배열
+
   - interceptorNames : 적용할 Advisor나 인터셉터, 다른 어드바이스 이름의 문자열 배열
+
   - singleton: getObject() 메서드를 얼마나 많이 호출했는지 상관 없이 팩토리가 하나의 객체를 반환해야 하는지를 결정
+
+    <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ggsz4w9fxhj321s0rse81.jpg" alt="image-20200716190923901" style="zoom: 33%;" />
+
+    ![image-20200716191029792](../../../Library/Application Support/typora-user-images/image-20200716191029792.png)
 
 
 
 #### 소스
-
-
 
 ```java
 package sample10;
