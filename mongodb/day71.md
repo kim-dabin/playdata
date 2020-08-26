@@ -1,4 +1,4 @@
-# DAY80
+# DAY71
 
 ## 학습목표
 
@@ -507,18 +507,19 @@ var config = {_id:'RS', members: [{_id:0, host:'localhost:27030'},{_id:1, host:'
 
 ```shell
  #!/bin/bash
-mongod --shardsvr --dbpath /usr/local/var/mydb/mydata02 --logpath /usr/local/var/mydb/mydata02/log/monod1.log --port 27030 --nojournal --replSet RS |  
-mongod --shardsvr --dbpath /usr/local/var/mydb/mydata03 --logpath /usr/local/var/mydb/mydata03/log/monod2.log --port 27031 --nojournal --replSet RS | 
-mongod --shardsvr --dbpath /usr/local/var/mydb/mydata04 --logpath /usr/local/var/mydb/mydata04/log/monod3.log --port 27032 --nojournal --replSet RS
+mongod --shardsvr --dbpath /usr/local/var/mongodata/mydb02 --logpath /usr/local/var/mongodata/mydb02/log/monod1.log --port 27030 --nojournal --replSet RS |  
+mongod --shardsvr --dbpath /usr/local/var/mongodata/mydb03 --logpath /usr/local/var/mongodata/mydb03/log/monod2.log --port 27031 --nojournal --replSet RS | 
+mongod --shardsvr --dbpath /usr/local/var/mongodata/mydb04 --logpath /usr/local/var/mongodata/mydb04/log/monod3.log --port 27032 --nojournal --replSet RS	| 
+mongod --shardsvr --dbpath /usr/local/var/mongodata/mydb05 --logpath /usr/local/var/mongodata/mydb05/log/monod4.log --port 27033 --nojournal --replSet TS
 ```
 
 
 
 ```shell
  #!/bin/bash
-mongod --configsvr --dbpath /usr/local/var/mydb/mongoc1 --logpath /usr/local/var/mydb/mongoc1/log/mongoc.log --port 27011 --replSet CRS | 
-mongod --configsvr --dbpath /usr/local/var/mydb/mongoc2 --logpath /usr/local/var/mydb/mongoc2/log/mongoc.log --port 27012 --replSet CRS | 
-mongod --configsvr --dbpath /usr/local/var/mydb/mongoc3 --logpath /usr/local/var/mydb/mongoc3/log/mongoc.log --port 27013 --replSet CRS 
+mongod --configsvr --dbpath /usr/local/var/mongodata/mongoc1 --logpath /usr/local/var/mongodata/mongoc1/log/mongoc.log --port 27011 --replSet CRS | 
+mongod --configsvr --dbpath /usr/local/var/mongodata/mongoc2 --logpath /usr/local/var/mongodata/mongoc2/log/mongoc.log --port 27012 --replSet CRS | 
+mongod --configsvr --dbpath /usr/local/var/mongodata/mongoc3 --logpath /usr/local/var/mongodata/mongoc3/log/mongoc.log --port 27013 --replSet CRS 
 ```
 
 
@@ -534,10 +535,14 @@ sh.addShard('RS/localhost:27030,localhost:27031,localhost:27032');
 ```
 
 ```javascript
-var conf = {_id:'TS',version: 1, members: [{_id:0, host:'localhost:27033'}] };
+var config = {_id:'TS',version: 1, members: [{_id:0, host:'localhost:27033'}] };
 ```
 
 
+
+```shell
+$ sudo mongos --configdb CRS/localhost:27011,localhost:27012,localhost:27013 --port 1000
+```
 
 
 
@@ -698,3 +703,128 @@ mongos> db.logs.getShardDistribution()
 ```
 
 <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi32qap2ssj314i0ek7ax.jpg" alt="image-20200825160945202" style="zoom: 33%;" />  
+
+
+
+### mongodump/mongorestore
+
+- mongodump 명령어를 사용하면 MongoDB에 접속해서 데이터베이스의 덤프를 dump라는 폴더 아래에 리턴됨 
+- DB별로 디렉토리가 하나씩, 하위 컬렉션 별로 BSON 파일이 생성됨 
+- 옵션 
+  - -d, --db
+  - -c, --collection
+- mongorestore
+  - BSON 파일로 복구함 
+
+> 1) 로컬에 있는 모든 데이터를 내려받자
+
+```shell
+$ mongodump -h localhost 
+```
+
+
+
+> 2) myScore db에 있는 컬렉션을 다운받자 
+
+```shell
+$ mongodump -h localhost -d myScore
+$ rm -rf dump/
+```
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi3x8u93loj316y0tm1jr.jpg" alt="image-20200826094532270" style="zoom:33%;" /> 
+
+
+
+> 3) myScore db에 있는 Score컬렉션만 /score로 다운 받자[복원용]
+
+```shell
+$ mongodump -h localhost -d myScore -c Score --out score
+```
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi3xnqhpcbj30yi07wjvw.jpg" alt="image-20200826095951755" style="zoom:33%;" /> 
+
+> 4) 로컬에 있는 전체를 all 폴더에 다운받자[복원용]
+
+```shell
+$ mongodump --out all
+```
+
+
+
+> 5) 로컬에 있는 전체를 gzip 형식으로 다운받자[복원용]
+>
+> 원래 용량의 1/3정도 줄어듦
+
+```shell
+$ mongodump --gzip -o gzip
+```
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi3xn54mc2j314m0cuwnj.jpg" alt="image-20200826095917830" style="zoom:33%;" /> 
+
+```shell
+$ mongodump --gzip --archive=all.gz
+```
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi3xpi02ylj30fa02udgn.jpg" alt="image-20200826100134146" style="zoom:33%;" /> 
+
+
+
+> 6) 샤드된 데이터를 다운로드 받아보자 sall 폴더에 받자
+
+```shell
+$ mongodump -h "RS/localhost:27031,localhost:27032" --out sall
+$ mongodump -h "TS/localhost:27033" --out sall
+```
+
+```shell
+$ mongodump --host localhost:1000 --out testdump
+$ mongodump -h localhost -p 1000 --out alltest
+```
+
+
+
+#### 복구
+
+1. 복구 작업시 데이터 제거하고 시작 
+
+```shell
+$ mongorestore -h localhost /usr/local/var/test/score/myScore/ -d myScore
+```
+
+
+
+> 원하는 데이터베이스에 원하는 컬렉션명으로 복구(업로드)
+
+```shell
+$ mongorestore --db myScore --collection Score02 Score.bson 
+```
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi3zqtv069j30iw03wq3x.jpg" alt="image-20200826111202345" style="zoom:33%;" /> 
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1gi3zrdhcdmj30ni05eabw.jpg" alt="image-20200826111234279" style="zoom:33%;" /> 
+
+
+
+> 전체 복구해보자
+
+```shell
+$ mongorestore -h localhost:27017 all
+```
+
+
+
+> gzip 파일로 복구
+
+```shell
+$ mongorestore -h localhost:27017 gzip/ --gzip
+$ mongorestore -h localhost:27017 --gzip --archive=all.gz
+```
+
+
+
+> 백업후 복구 
+
+```shell
+$ mongorestore -h localhost ~/dump/
+$ mongorestore -h localhost -d dms --drop ~/dump/dms/
+```
+
