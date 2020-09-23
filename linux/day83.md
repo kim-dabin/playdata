@@ -1,4 +1,4 @@
-# DAY83
+# DAY83-84
 
 ## 시스템 확인 
 
@@ -251,4 +251,296 @@
        - 터미널
 
    
+
+   ## 파일의 구성요소, 파일의 권한, 계정생성, 계정권한
+
+   ```shell
+   # ls -F /
+   bin@   dev/  home/  lib64@  mnt/  proc/  run/   srv/  tmp/  var/
+   boot/  etc/  lib@   media/  opt/  root/  sbin@  sys/  usr/
+   ```
+
+   1. **bin@ [기본 명령어 존재]**   
+
+   2. dev/ [장치 관리자 파일이 존재] 
+
+   3. **home/ [일반 사용자들이 사용하는 홈 디렉토리]** 
+
+   4. lib64@  
+
+   5. **mnt/ [입/출력 장치등 파일 시스템을 임시로 마운트 하는 디렉토리]** 
+
+   6. proc/ [프로세스 정보, 커널 관련 정보 디렉토리] 
+
+   7. run/   
+
+   8. srv/ [FTP 또는 웹 시스템에서 제공하는 데이터를 저장하는 디렉토리]
+
+   9. tmp/ [시스템 사용중에 발생하는 임시데이터가 저장되는 디렉토리]
+
+   10. var/ [시스템 운용체제에 실행되는 데이터 로그 관련정보]
+
+   11. boot/ [부팅에 필요한 커널 파일이 존재하는 곳] 
+
+   12. **etc/ [리눅스 시스템 설정을 위한 각종 파일]**
+
+   13. lib@ [공유 라이브러리]  
+
+   14. media/ [외부장치 연걸할 때 사용되는 곳(USB/CD-ROM)] 
+
+   15. opt/ [리눅스에서 인식하지 못하는 프로그램을 관리] 
+
+   16. root/ [root 계정의 홈디렉토리, /(루트) 와는 다르다] 
+
+   17. lost+found  
+
+   18. sys/ [리눅스 커널과 관련된 디렉토리] 
+
+   19. usr/ [기본 실행파일과 라이브러리 파일, 헤더파일이 존재하는 디렉토리]
+
+       ---------------
+
+   20. lost+found/ [자료를 탐색할 때 버퍼 또는 클립보드를 구현하는 곳]
+
+   21. misc/[기타 파일_ 인식하지 않은 파일의 정보가 있는 곳]
+
+   22. **net/ [네트워크 정보]**
+
+   23. selinux [히든 파일, 분할 시스템 정보 ] 
+
+
+
+### 경로
+
+1. 상대경로 : / 가없다
+   - "/"이와의 문자로 시작함
+   - 현재 디렉토리에서 서브 디렉토리를 이동할 때 서브 디렉토리명 추가로 이동
+   - 현재에서 상위로 갈때 ..
+   - 상대 경로명은 현재 위치한 디렉토리의 위치에 따라 달라질 수 있음
+2. 절대 경로 : /로 시작 
+   - 반드시르 루트를 / 로 시작
+   - 루트 디렉토리 부터 중간 디렉토리를 모두 표시함
+   - 특정 위치를 표시하는 절대 경로명은 항상 동일해야함 
+
+
+
+### 디렉토리 파일 생성 규칙 
+
+- / 이외의 문자로 생성
+- 알파벳, 숫자, -(빼기),_(언더바), .(마침표) 만 사용가능 
+- 사용하면 안됨
+  - 공백, *, |, ",',@,#,$,%,^,&
+- 대소문자 구별 가능 
+  - TEST.java <-구별가능-> Test.java
+- 파일과 디렉토리 명을 선언할 때 점(.)으로 시작하면 숨김파일로 간주함
+
+
+
+### 상세정보 (ls -al)
+
+```shell
+drwxr-xr-x   2 root root    6  9월  9 17:08 hsperfdata_root
+```
+
+- d: 파일의 유형[-d | b c P s]
+  - [-(일반 정규파일) d(디렉토리) l(심볼) b(블록) c(섹터) P(파이프_ 프로세스간 통신에 사용되는 파일) s(소켓)]
+- rwx: 사용권한
+- r-x:그룹권한
+- r-x: 타인이 접근할 수 있는 권한 
+
+
+
+### 
+
+#### find : 파일 찾기 
+
+- find 경로 검색 조건 [옵션] [동작]
+- [옵션]
+  - name : 파일 이름으로 검색
+  - type : 파일 타입으로 검색[b: 블록 | d: 디렉토리 | f:파일 | l : 심볼릭 링크]
+  - user : 로그인 아이디로 사용자가 소유한 모든 파일 검색
+  - perm : 지정한 접근 권한과 일치하는 파일 검색 
+- [동작]
+  - exec 명령{} \; : 검색된 파일에 명령을 실행
+  - ok 명령{} \; : 사용자의 확인을 받아서 명령을 시행 
+  - print: 절대 경로명을 화면에 출력
+  - ls : 검색결과가 긴 목록 형식으로 출력
+
+
+
+#### cat 
+
+ - ```shell
+   cat > 파일명 : 파일에 저장함
+   ```
+
+ - ```shell
+   cat >> 파일명 : 파일에 추가
+   ```
+
+ - ```shell
+   cat < 파일 : 표준 입력으로 받음
+   ```
+
+
+
+> my.txt 파일의 값을 입력 받아 d.txt로 저장
+
+````shell
+$ cat < my.txt > d.txt 
+````
+
+<img src="../../../Library/Application Support/typora-user-images/image-20200910150123115.png" alt="image-20200910150123115" style="zoom:50%;" /> 
+
+
+
+> my.txt의 줄번호 추가해서 다시 res.txt로 저장 
+
+```shell
+$ cat -n my.txt > res.txt
+```
+
+<img src="../../../Library/Application Support/typora-user-images/image-20200910150445264.png" alt="image-20200910150445264" style="zoom:50%;" /> 
+
+
+
+#### grep: 특정 문자열 검색 
+
+- -A 숫자 : 지정 숫자 아래 
+- -B 숫자 : 지정 숫자 위 
+- -c : 라인포함
+- -i : 대소문자 무시 
+- -n: 라인번호 출력 
+
+
+
+```shell
+[hadoop@hadoop test_dir]$ cat > edible
+1. apple
+2. strawberry
+3. watermelon
+4. mandarin
+5. pear
+6. apricot
+```
+
+
+
+> 귤을 포함한 아래 2개의 과일을 찾아라 
+
+```shell
+$ grep -A 2 mandarin edible
+```
+
+![image-20200910153653327](../../../Library/Application Support/typora-user-images/image-20200910153653327.png)
+
+
+
+> 수박을 포함한 위 1개의 과일을 찾아라
+
+```shell
+$ grep -B 1 watermelon edible
+```
+
+![image-20200910153807926](../../../Library/Application Support/typora-user-images/image-20200910153807926.png)
+
+
+
+> r자가 들어간 과일을 출력하라 
+
+```shell
+$ grep -r r edible
+```
+
+![image-20200910154202591](../../../Library/Application Support/typora-user-images/image-20200910154202591.png)
+
+
+
+> s자가 들어간 과일을 출력하되 라인번호도 출력
+
+```bash
+$ grep -r s -n edible
+```
+
+
+
+> 과일 정렬 
+
+```bash
+$ sort -k 2 edible
+```
+
+
+
+> 과일을 딸기를 기준으로 정렬해라 
+
+
+
+> 과일을 숫자를 기준으로 역순 정렬
+
+```bash
+$ sort -r edible
+```
+
+
+
+> edible 파일을 edible2로 하나 생성한 다음 두개의 파일을 병합해서 화면에 출력
+
+```bash
+$ sort -m edible edible2 
+$ cat edible edible2 
+```
+
+- 최상위 루트에서 크기가 1000블록 이상인 파일 검색
+
+```bash
+# find / -size +1000 -print
+```
+
+- 10일 이전에 수정된 파일 검색 
+
+```bash
+$ find .mtime + 10 -print
+```
+
+
+
+- 5분전에 마지막으로 수정된 파일을 찾을 수 잇다. 
+
+```bash
+$ find / -cmin 5 -print
+```
+
+- 1일 이내에 수정된 파일을 검색하여 모두 지움 
+
+```bash
+$ find . -mtime -1 -exec rm {} \;
+```
+
+
+
+- /home 디렉토리에 용량이 0인 파일과 디렉토리를 찾음 
+
+```bash
+$ find /home -empty -print
+```
+
+
+
+#### wc : 파일의 크기 정보를 출력 
+
+- wc : Word Count : 특정 파일의 단어 수 
+  - c: byte 수
+  - w: 단어의 수 
+  - l: 라인의 수
+  - m: 문자의 수 
+
+> member의 단어 라인 문자수를 출력해보자 
+
+```bash
+$ wc member
+$ wc -w member
+$ wc -m member
+$ wc -wcm member
+```
 
