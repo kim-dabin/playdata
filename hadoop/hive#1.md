@@ -116,3 +116,21 @@ books
 1
 ```
 
+
+
+```shell
+--username
+big5
+-P
+--connect
+jdbc:oracle:thin:@192.168.0.15:1521:xe
+--query
+"SELECT no, title, author, publish_date FROM books WHERE $CONDITIONS"
+--target-dir
+/user/hive/warehouse/books
+--split-by
+NO
+--m
+1
+```
+
